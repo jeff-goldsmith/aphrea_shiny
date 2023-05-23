@@ -19,3 +19,6 @@ navbar:
 output:
   html_document:
     theme: flatly
+    css: styles.css
+    lib_dir: site_libs
+    self_contained: no
