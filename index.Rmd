@@ -1,0 +1,7 @@
+---
+title: "Shiny Apps"
+---
+
+This page contains materials by for a lecture on Shiny apps, taught as part of a workshop organized by [APHREA-DST](https://www.aphrea-dst.org). 
+
+Much of this lecture draw from [P8105](https://p8105.com).

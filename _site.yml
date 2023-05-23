@@ -1,0 +1,21 @@
+name: "Shiny"
+output_dir: "."
+navbar:
+  title: "Shiny"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Materials"
+      menu:
+        - text: "Data"
+          href: data.html
+        - text: "flexashboard"
+          href: flexdashboards.html
+        - text: "Shiny Dashboards"
+          href: shortcourse_shiny.html
+  right:
+    - icon: fa-github fa-lg
+      href: http://github.com/jeff-goldsmith/aphrea_shiny
+output:
+  html_document:
+    theme: flatly

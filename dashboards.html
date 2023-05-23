@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Plotly and flexdashboard</title>
+
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Shiny</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Materials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="data.html">Data</a>
+    </li>
+    <li>
+      <a href="flexdashboards.html">flexashboard</a>
+    </li>
+    <li>
+      <a href="shortcourse_shiny.html">Shiny Dashboards</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="http://github.com/jeff-goldsmith/aphrea_shiny">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Plotly and <code>flexdashboard</code></h1>
+
+</div>
+
+
+<p>In this page, we introduce <code>flexdashboards</code> as a way to
+collect plots (either static or interactive).</p>
+<div id="slide-deck" class="section level2">
+<h2>Slide Deck</h2>
+<div class="vid_container">
+<p><iframe 
+    src="https://speakerdeck.com/player/d593b18900444bf48c2516233f961139"
+    allowfullscreen 
+    frameborder="0"
+    class="video"> </iframe></p>
+</div>
+<div style="margin-bottom:5px">
+<strong>
+<a href="https://speakerdeck.com/jeffgoldsmith/aphrea-workshop-dashboards" title="Dashboards" target="_blank">Plotly
+and Dashboards</a> </strong> from
+<strong><a href="https://speakerdeck.com/jeffgoldsmith" target="_blank">Jeff
+Goldsmith</a></strong>.
+</div>
+<p><br></p>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<div id="flexdashboard" class="section level3">
+<h3><code>flexdashboard</code></h3>
+<p>Clearly you can embed interactive graphics in HTML files produced by
+R Markdown; this is a handy time to introduce dashboards. In short,
+dashboards are a collection of related graphics (or tables, or other
+outputs) that are displayed in a structured way that’s easy to
+navigate.</p>
+<p>You can create dashboards using the <code>flexdashboard</code>
+package by specifying <code>flex_dashboard</code> as the output format
+in your R Markdown YAML. There are a variety of layout options, but
+we’ll focus on a pretty simple structure produced by the template below.
+This is the default dashboard template in R Studio – if you have
+<code>flexdashboard</code> installed, you can use
+<code>File &gt; New File &gt; R Markdown &gt; From Template</code> to
+create a new .Rmd file with the structure below.</p>
+<pre><code>---
+title: &quot;Untitled&quot;
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```</code></pre>
+<p>This dashboard has space for three plots, which we’ll populate with
+plots of a few different types. Dashboard layouts are controlled by
+specifying columns and rows, and potentially subdiving these. We
+specified a two-column layout with set column widths, and then divided
+the second column into two panels. Using tabbed browsing and multiple
+pages can also be really useful – check out the gallery linked below for
+examples!</p>
+</div>
+<div id="load-packages-and-data" class="section level3">
+<h3>Load packages and data</h3>
+<p>I’ll start by loading packages used in to create the dashboard.</p>
+<pre class="r"><code>library(tidyverse)
+library(p8105.datasets)</code></pre>
+<p>We’re going to focus on the <a href="dataset_airbnb.html">Airbnb</a>
+data for this page. The code below extracts what we need right now;
+specifically, we select only a few of the variables and filter to
+include a subset of the data. In part, this makes sure that the
+resulting dataset and plots are computationally feasible – for large
+datasets, you may need to downsample.</p>
+<pre class="r"><code>data(nyc_airbnb)
+
+nyc_airbnb = 
+  nyc_airbnb %&gt;% 
+  mutate(rating = review_scores_location / 2) %&gt;%
+  rename(latitude = lat, longitude = long) %&gt;%
+  select(
+    borough = neighbourhood_group, neighbourhood, rating, price, room_type,
+    latitude, longitude) %&gt;%
+  filter(
+    !is.na(rating), 
+    borough == &quot;Manhattan&quot;,
+    room_type == &quot;Entire home/apt&quot;,
+    price %in% 100:500)</code></pre>
+<p>We’ll use this dataset as the basis for our plots.</p>
+</div>
+<div id="plots" class="section level3">
+<h3>Plots</h3>
+<p>The three code chunks below make plots exploring this dataset. Right
+now, we’re primarily interested in being able to create plots and embed
+them in a dashboard, so the plots themselves are relatively simple.</p>
+<p>Below we’re plotting the location (latitude and longitude) of the
+rentals in our dataset, and mapping <code>price</code> to color.</p>
+<pre class="r"><code>nyc_airbnb %&gt;%
+  ggplot(aes(x = latitude, y = longitude, color = price)) + 
+  geom_point(alpha = .5)</code></pre>
+<p><img src="dashboards_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<p>Next we show a boxplot for the distribution of price in
+neighbourhoods.</p>
+<pre class="r"><code>nyc_airbnb %&gt;% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) %&gt;% 
+  ggplot(aes(x = neighbourhood, y = price)) + 
+  geom_boxplot()</code></pre>
+<p><img src="dashboards_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<p>Lastly, we make a bar chart showing the number of rentals in each
+neighbourhood.</p>
+<pre class="r"><code>nyc_airbnb %&gt;% 
+  count(neighbourhood) %&gt;% 
+  mutate(neighbourhood = fct_reorder(neighbourhood, n)) %&gt;% 
+  ggplot(aes(x = neighbourhood, y = n)) + 
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="dashboards_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p>Embedding these in the “open” spots in the flexdashboard will create
+a (static) way of visualizing these data.</p>
+</div>
+<div id="flexdashboards-on-websites" class="section level3">
+<h3><code>flexdashboard</code>s on websites</h3>
+<p>You can share the HTML files for dashboards directly (e.g. by email);
+you can also host these online to make the dashboard visible to others.
+That process is essentially the same as for any other website you’d
+make.</p>
+<p>However, the website’s <code>_site.yml</code> file conflicts with the
+dashboard’s <code>YAML</code> header regarding the output format – and
+the website’s <code>_site.yml</code> “wins”. To address this issue,
+instead of knitting you can use this command to knit the dashboard.</p>
+<pre class="r"><code>rmarkdown::render(&quot;dashboard_template.Rmd&quot;, output_format = &quot;flexdashboard::flex_dashboard&quot;)</code></pre>
+<p>This will create <code>dashboard_template.html</code> but not open it
+in RStudio’s Viewer pane; you can open the file in a browser instead.
+Alternatively, using RStudio’s Build pane to Build Website will produce
+the same results. To illustrate, we’ll put the dashboard we just created
+on a website for this topic.</p>
+<p>All of this <code>YAML</code> business is only an issue for
+dashboards embedded in websites; a standalone dashboard (in a
+non-website GH repo or R Project) can be knit using the same process as
+other .Rmd files.</p>
+</div>
+</div>
+<div id="other-materials" class="section level2">
+<h2>Other materials</h2>
+<ul>
+<li>Dashboards are pretty well-supported. Check out the <a
+href="https://pkgs.rstudio.com/flexdashboard/articles/flexdashboard.html">overview</a>,
+<a
+href="https://pkgs.rstudio.com/flexdashboard/articles/layouts.html">layout</a>
+discussion, and <a
+href="https://pkgs.rstudio.com/flexdashboard/articles/examples.html">examples</a></li>
+<li>There are cool dashboards all over. To get a sense of how these work
+in the real world, check out:
+<ul>
+<li>The NYC Restaurant Inspection <a
+href="https://data.cityofnewyork.us/Health/DOHMH-New-York-City-Restaurant-Inspection-Results/rs6k-p7g6">dashboard</a>;</li>
+<li>This <a href="https://juliasilge.shinyapps.io/power-app/">app</a>
+for understanding power (blog post <a
+href="https://juliasilge.com/blog/ab-testing/">here</a>);</li>
+<li>538’s <a
+href="https://projects.fivethirtyeight.com/p-hacking/index.html?initialWidth=1024&amp;childId=phacking&amp;parentTitle=Science%20Isn’t%20Broken%20%7C%20FiveThirtyEight&amp;parentUrl=https%3A%2F%2Ffivethirtyeight.com%2Ffeatures%2Fscience-isnt-broken%2F">p-hacking
+tool</a> (full article <a
+href="https://fivethirtyeight.com/features/science-isnt-broken/#part3">here</a>).</li>
+</ul></li>
+</ul>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

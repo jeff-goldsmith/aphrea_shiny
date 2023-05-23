@@ -1,0 +1,67 @@
+---
+title: "Data"
+---
+
+## Packages
+
+In the short course, we'll actively use the `tidyverse` collection of packages for data manipulation; the `flexdashboard` package for creating dashboards; and the `shiny` package for interactivity. Code to install the packages follows:
+
+```{r, eval=FALSE}
+install.packages(c("tidyverse", "flexdashboard", "shiny"))
+```
+
+## Data
+
+We will use data on AirBNB rentals in NYC in this lecture. These data were accessed from [Inside Airbnb](http://insideairbnb.com/get-the-data.html) on September 2, 2017. 
+
+The version of the data that we will use in this lecture can be found [here](./data/nyc_airbnb.zip), and then loaded using `readr::read_csv()`. You can also access these data through the `p8105.datasets` package. Install that package using:
+
+```{r, eval=FALSE}
+devtools::install_github("p8105/p8105.datasets")
+```
+
+then load the data with
+
+```{r, eval = FALSE}
+library(p8105.datasets)
+
+data(nyc_airbnb)
+```
+
+
+## About [Inside Airbnb](http://insideairbnb.com/about.html)
+
+> Inside Airbnb is an independent, non-commercial set of tools and data that allows you to explore how Airbnb is really being used in cities around the world.
+
+> By analyzing publicly available information about a city's Airbnb's listings, Inside Airbnb provides filters and key metrics so you can see how Airbnb is being used to compete with the residential housing market.
+
+
+## Data description
+
+Inside Airbnb provides some visualizations of the NYC Airbnb data [here](http://insideairbnb.com/new-york-city/), where you can see maps showing type of room, activity, availability, and listings per host for all NYC Airbnb listings.
+
+The resulting R data file `nyc_airbnb` contains a single dataframe `df` with 40,753 rows of data on 17 variables:
+
+- `id`: listing id
+- `review_scores_location`: 0-5 stars converted into a 0-10 scale
+- `name`: listing name
+- `host_id`: host id 
+- `host_name`: host name
+- `neighbourhood_group`: NYC borough
+- `neighbourhood`: NYC neighborhood
+- `latitude`: listing latitude
+- `longitude`: listing longitude
+- `room_type`: type of listing (Entire home/apt, Private room, Shared room)
+- `price`: listing price
+- `minimum_nights`: required minimum nights stay
+- `number_of_reviews`: total number of reviews
+- `last_review`: date of last review
+- `reviews per month`: average number of reviews per month
+- `calculated_host_listings_count`: total number of listings for this host
+- `availability_365`: number of days listing is available out of 365
+
+
+```{r}
+devtools::session_info(c("refund", "refund.shiny"))
+```
+
