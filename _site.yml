@@ -9,10 +9,10 @@ navbar:
       menu:
         - text: "Data"
           href: data.html
-        - text: "flexashboard"
-          href: flexdashboards.html
+        - text: "Dashboards"
+          href: dashboards.html
         - text: "Shiny Dashboards"
-          href: shortcourse_shiny.html
+          href: shiny.html
   right:
     - icon: fa-github fa-lg
       href: http://github.com/jeff-goldsmith/aphrea_shiny
