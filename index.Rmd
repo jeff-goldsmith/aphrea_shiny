@@ -2,6 +2,7 @@
 title: "Shiny Apps"
 ---
 
-This page contains materials by for a lecture on Shiny apps, taught as part of a workshop organized by [APHREA-DST](https://www.aphrea-dst.org). 
+This page contains materials by for a lecture on Shiny apps, taught as part of an Experience Sharing and Training Workshop, held 
+25 & 26 May 2023 in Addis Ababa and organized by [APHREA-DST](https://www.aphrea-dst.org). 
 
-Much of this lecture draw from [P8105](https://p8105.com).
+Much of this lecture draws from [P8105](https://p8105.com).

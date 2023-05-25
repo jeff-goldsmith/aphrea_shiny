@@ -61,7 +61,3 @@ The resulting R data file `nyc_airbnb` contains a single dataframe `df` with 40,
 - `availability_365`: number of days listing is available out of 365
 
 
-```{r}
-devtools::session_info(c("refund", "refund.shiny"))
-```
-
